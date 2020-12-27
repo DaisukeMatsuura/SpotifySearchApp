@@ -1,7 +1,6 @@
 <template>
-  <div class="input-wrap">
-    <input type="text" class="input" v-model="value" @input="updateField()">
-  </div>
+      <input type="text" name="search_word" id="search_word" class="outline-none min-w-sm p-2 bg-white w-full"
+             placeholder="アルバムまたは楽曲名を入力して下さい" v-model="value" @input="updateField()">
 </template>
 
 <script>
@@ -27,10 +26,5 @@ export default {
 </script>
 
 <style scoped>
-.input-wrap {
 
-}
-.input {
-
-}
 </style>

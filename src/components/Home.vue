@@ -1,16 +1,25 @@
 <template>
-<div>
-  <h1>Spotify Music Search Application</h1>
-  <div class="search-field">
+<div class="container mx-auto">
+  <div class="w-1/2 md:w-1/4 p-10">
+    <img alt="Vue logo" src="../assets/logo.png">
+  </div>
+  <h1 class="text-center text-white font-bold tracking-widest md:text-2xl">Spotify Music Search Application</h1>
+  <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-10 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
     <InputField @update:field="searchWord = $event" :data="searchWord" />
-    <button @click="getMusicInfo()">イベント発火用</button>
+    <div @click="getMusicInfo()"><Button label="Search" /></div>
+
+  </div>
+  <div>
+    <Result :result="result"/>
   </div>
 
 </div>
 </template>
 
 <script>
+import Result from '../components/Result'
 import InputField from '../components/UI/InputField'
+import Button from '../components/UI/Button'
 import axios from 'axios'
 import setting from '../../setting/setting'
 
@@ -19,12 +28,15 @@ export default {
 
   components: {
     InputField,
+    Button,
+    Result
   },
 
   data () {
     return {
       accessToken: '',
       searchWord: '',
+      result: {},
     }
   },
 
@@ -41,10 +53,10 @@ export default {
       const AUTH = 'Basic ' + btoa(`${setting.CLIENT_ID}:${setting.CLIENT_SECRET}`)
 
       axios.post('/api/token', params, { headers: {'Authorization': AUTH} })
-        .then((response) => {
+        .then(response => {
           self.accessToken = response.data.access_token
         })
-        .catch((errors) => {
+        .catch(errors => {
           console.log(errors)
         })
     },
@@ -52,11 +64,12 @@ export default {
       const TOKEN = 'Bearer ' + this.accessToken
       axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=album,track`,
           { headers: { 'Authorization': TOKEN }})
-        .then(function (response) {
+        .then(response => {
+          this.searchWord = ''
           console.log(response.data);
         })
-        .catch(error => {
-          console.log(error.response)
+        .catch(errors => {
+          console.log(errors)
         });
     }
   }
