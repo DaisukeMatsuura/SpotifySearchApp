@@ -1,5 +1,5 @@
 <template>
-<div class="container mx-auto">
+<div class="container mx-auto h-full bg-black">
   <div class="w-1/2 md:w-1/4 p-10">
     <img alt="Vue logo" src="../assets/logo.png">
   </div>
@@ -63,7 +63,7 @@ export default {
     },
     getMusicInfo: function () {
       const TOKEN = 'Bearer ' + this.accessToken
-      axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=album,track`,
+      axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=track`,
           { headers: { 'Authorization': TOKEN }})
         .then(response => {
           this.searchWord = ''

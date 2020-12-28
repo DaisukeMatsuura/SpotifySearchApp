@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black h-screen">
+  <div class="bg-black app-height">
     <Home/>
   </div>
 </template>
@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style>
-
+.app-height {
+  height: 1800px;
+}
 </style>
