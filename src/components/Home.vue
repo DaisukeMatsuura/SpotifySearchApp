@@ -10,7 +10,7 @@
 
   </div>
   <div>
-    <Result :result="result"/>
+    <Result :result="result" :firstView="firstView"/>
   </div>
 
 </div>
@@ -34,6 +34,7 @@ export default {
 
   data () {
     return {
+      firstView: true,
       accessToken: '',
       searchWord: '',
       result: {},
@@ -66,6 +67,7 @@ export default {
           { headers: { 'Authorization': TOKEN }})
         .then(response => {
           this.searchWord = ''
+          this.result = response.data
           console.log(response.data);
         })
         .catch(errors => {
@@ -77,8 +79,5 @@ export default {
 </script>
 
 <style scoped>
-.search-field {
-  display: flex;
-  justify-content: center;
-}
+
 </style>

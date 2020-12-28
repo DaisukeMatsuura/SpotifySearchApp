@@ -4,8 +4,11 @@
     <div v-if="Object.keys(result).length > 0" class="mt-10 bg-blue-500">
       hohohohooh
     </div>
+    <div v-else-if="Object.keys(result).length == 0 && firstView" class="text-white">
+      ファーストビュー
+    </div>
     <div v-else class="text-white">
-      <div>楽曲がみつかりませんでした...</div>
+      <div>楽曲がみつかりませんでした... <br /> 別のキーワードをお試し下さい</div>
     </div>
 
   </div>
@@ -15,7 +18,7 @@
 <script>
 export default {
   name: "Result",
-  props: [ 'result' ],
+  props: [ 'result', 'firstView' ],
 
 }
 </script>
