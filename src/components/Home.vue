@@ -9,8 +9,28 @@
     <div @click="getMusicInfo()"><Button label="Search" /></div>
 
   </div>
+<!--  <div class="flex justify-center text-white">-->
+<!--    <paginate-->
+<!--        :page-count="4"-->
+<!--        :container-class="pagination"-->
+<!--        :prev-text="prev"-->
+<!--        :next-text="next"-->
+<!--        :click-handler="clickCallback">-->
+
+<!--      <span slot="prevContent">Changed previous button</span>-->
+<!--      <span slot="nextContent">Changed next button</span>-->
+<!--      <span slot="breakViewContent">-->
+<!--    <svg width="16" height="4" viewBox="0 0 16 4">-->
+<!--      <circle fill="#999999" cx="2" cy="2" r="2" />-->
+<!--      <circle fill="#999999" cx="8" cy="2" r="2" />-->
+<!--      <circle fill="#999999" cx="14" cy="2" r="2" />-->
+<!--    </svg>-->
+<!--  </span>-->
+
+<!--    </paginate>-->
+<!--  </div>-->
   <div>
-    <Result :result="result" :firstView="firstView"/>
+    <Result :results="results" :firstView="firstView"/>
   </div>
 
 </div>
@@ -37,7 +57,7 @@ export default {
       firstView: true,
       accessToken: '',
       searchWord: '',
-      result: {},
+      results: {},
     }
   },
 
@@ -67,8 +87,16 @@ export default {
           { headers: { 'Authorization': TOKEN }})
         .then(response => {
           this.searchWord = ''
-          this.result = response.data
-          console.log(response.data);
+          Object.keys(response.data.tracks.items)
+            .map(key => {
+                this.results[key] = {
+                'track': response.data.tracks.items[key].name,
+                'album': response.data.tracks.items[key].album.name,
+                'artist': response.data.tracks.items[key].artists.map(e => e.name).join(', '),
+                'release': response.data.tracks.items[key].album.release_date,
+                'img': response.data.tracks.items[key].album.images[0].url,
+              }
+            })
         })
         .catch(errors => {
           console.log(errors)
