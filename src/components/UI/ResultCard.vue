@@ -14,7 +14,6 @@
         <div class="text-xs uppercase">artist</div>
         <div class="text-xl pl-16 py-1">{{$props.artist}}</div>
       </div>
-
       <div class="text-sm pt-3">Release: <span class="pl-4">{{$props.release}}</span></div>
     </div>
   </div>

@@ -7,49 +7,27 @@
   <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-10 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
     <InputField @update:field="searchWord = $event" :data="searchWord" />
     <div @click="getMusicInfo()"><Button label="Search" /></div>
-
   </div>
-<!--  <div class="flex justify-center text-white">-->
-<!--    <paginate-->
-<!--        :page-count="4"-->
-<!--        :container-class="pagination"-->
-<!--        :prev-text="prev"-->
-<!--        :next-text="next"-->
-<!--        :click-handler="clickCallback">-->
 
-<!--      <span slot="prevContent">Changed previous button</span>-->
-<!--      <span slot="nextContent">Changed next button</span>-->
-<!--      <span slot="breakViewContent">-->
-<!--    <svg width="16" height="4" viewBox="0 0 16 4">-->
-<!--      <circle fill="#999999" cx="2" cy="2" r="2" />-->
-<!--      <circle fill="#999999" cx="8" cy="2" r="2" />-->
-<!--      <circle fill="#999999" cx="14" cy="2" r="2" />-->
-<!--    </svg>-->
-<!--  </span>-->
-
-<!--    </paginate>-->
-<!--  </div>-->
-  <div>
-    <Result :results="results" :firstView="firstView"/>
-  </div>
+  <Result :results="results" :firstView="firstView" />
 
 </div>
 </template>
 
 <script>
-import Result from '../components/Result'
 import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
 import axios from 'axios'
 import setting from '../../setting/setting'
+import Result from "@/components/Result";
 
 export default {
   name: "Home",
 
   components: {
+    Result,
     InputField,
     Button,
-    Result
   },
 
   data () {
@@ -57,7 +35,7 @@ export default {
       firstView: true,
       accessToken: '',
       searchWord: '',
-      results: {},
+      results: [],
     }
   },
 
@@ -86,22 +64,27 @@ export default {
       axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=track`,
           { headers: { 'Authorization': TOKEN }})
         .then(response => {
-          this.searchWord = ''
+          console.log(this)
+          const responseData = []
           Object.keys(response.data.tracks.items)
             .map(key => {
-                this.results[key] = {
+                responseData.push({
                 'track': response.data.tracks.items[key].name,
                 'album': response.data.tracks.items[key].album.name,
                 'artist': response.data.tracks.items[key].artists.map(e => e.name).join(', '),
                 'release': response.data.tracks.items[key].album.release_date,
                 'img': response.data.tracks.items[key].album.images[0].url,
-              }
+              })
             })
+          this.results = responseData
+          this.searchWord = ''
+          this.firstView = false
+          console.log(this.results)
         })
         .catch(errors => {
           console.log(errors)
         });
-    }
+    },
   }
 }
 </script>
