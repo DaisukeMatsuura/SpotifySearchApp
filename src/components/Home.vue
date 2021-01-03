@@ -64,7 +64,6 @@ export default {
       axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=track`,
           { headers: { 'Authorization': TOKEN }})
         .then(response => {
-          console.log(this)
           const responseData = []
           Object.keys(response.data.tracks.items)
             .map(key => {
@@ -79,7 +78,7 @@ export default {
           this.results = responseData
           this.searchWord = ''
           this.firstView = false
-          console.log(this.results)
+          // console.log(this.results)
         })
         .catch(errors => {
           console.log(errors)
