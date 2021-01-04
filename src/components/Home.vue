@@ -4,7 +4,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
   </div>
   <h1 class="text-center text-white font-bold tracking-widest md:text-2xl">Spotify Music Search Application</h1>
-  <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-10 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
+  <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-8 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
     <InputField @update:field="searchWord = $event" :data="searchWord" />
     <div @click="getMusicInfo()"><Button label="Search" /></div>
   </div>

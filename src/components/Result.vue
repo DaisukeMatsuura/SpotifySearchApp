@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center h-full">
+  <div class="flex justify-center">
     <div v-show="Object.keys(results).length == 0 && firstView" class="text-white">
       <div>ファーストビュー</div>
     </div>
@@ -53,7 +53,6 @@ export default {
   methods: {
     clickCallback: (pageNum) => {
       this.currentPage = Number(pageNum)
-      console.log(this.currentPage)
     }
   },
   computed: {
