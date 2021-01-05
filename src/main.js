@@ -4,6 +4,7 @@ import axios from 'axios'
 import './assets/tailwind.css'
 import 'destyle.css'
 import Paginate from 'vuejs-paginate'
+import store from './components/store';
 
 Vue.component('paginate', Paginate)
 
@@ -13,5 +14,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.headers.get['Accept-Language'] = 'ja;q=1'
 
 new Vue({
+  store,
   render: h => h(App),
 }).$mount('#app')
