@@ -9,17 +9,25 @@
     <div @click="getMusicInfo()"><Button label="Search" /></div>
   </div>
 
-  <Result :results="results" :firstView="firstView" />
+  <div v-show="isLoading">
+    <Spinner />
+  </div>
+  <div v-show="!isLoading">
+    <Result :results="results" :firstView="firstView" />
+  </div>
 
 </div>
 </template>
 
 <script>
+import setting from '../../setting/setting'
+import axios from 'axios'
+
 import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
-import axios from 'axios'
-import setting from '../../setting/setting'
-import Result from "@/components/Result";
+import Spinner from '../components/UI/Spinner'
+
+import Result from '../components/Result'
 
 export default {
   name: "Home",
@@ -28,6 +36,7 @@ export default {
     Result,
     InputField,
     Button,
+    Spinner
   },
 
   data () {
@@ -36,11 +45,13 @@ export default {
       accessToken: '',
       searchWord: '',
       results: [],
+      isLoading: false,
     }
   },
 
   mounted () {
     this.getAccessToken()
+    this.$store.dispatch('setCurrentPage', 1)
   },
 
   methods: {
@@ -60,6 +71,7 @@ export default {
         })
     },
     getMusicInfo: function () {
+      this.isLoading = true
       const TOKEN = 'Bearer ' + this.accessToken
       axios.get(`https://api.spotify.com/v1/search?q=name:${this.searchWord}&market=JP&type=track`,
           { headers: { 'Authorization': TOKEN }})
@@ -75,12 +87,14 @@ export default {
                 'img': response.data.tracks.items[key].album.images[0].url,
               })
             })
+          this.$store.dispatch('setCurrentPage', 1)
           this.results = responseData
           this.searchWord = ''
           this.firstView = false
-          // console.log(this.results)
+          this.isLoading = false
         })
         .catch(errors => {
+          this.isLoading = false
           console.log(errors)
         });
     },
