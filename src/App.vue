@@ -17,6 +17,6 @@ export default {
 
 <style>
 .app-height {
-  height: 1800px;
+  height: 1900px;
 }
 </style>
