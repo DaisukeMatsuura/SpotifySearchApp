@@ -3,10 +3,10 @@ import App from './App.vue'
 import axios from 'axios'
 import './assets/tailwind.css'
 import 'destyle.css'
-import Paginate from 'vuejs-paginate'
+import Pagination from 'vuejs-paginate'
 import store from './components/store';
 
-Vue.component('paginate', Paginate)
+Vue.component('Pagination', Pagination)
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'https://accounts.spotify.com'

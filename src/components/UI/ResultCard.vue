@@ -1,6 +1,6 @@
 <template>
   <div class="flex ml-20 my-10 text-white">
-    <img class="w-1/5 mx-24 rounded-lg" :src="$props.img" alt="album_image">
+    <img class="w-48 h-48 mx-24 rounded-lg" :src="$props.img" alt="album_image">
     <div class="w-full pt-1 flex-col">
       <div>
         <div class="text-xs uppercase">track</div>

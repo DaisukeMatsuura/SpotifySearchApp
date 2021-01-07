@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center bg-black">
     <div v-show="Object.keys(results).length == 0 && firstView" class="text-white">
       <div>Search for Your Favorite Music.</div>
     </div>
@@ -11,7 +11,8 @@
                   :artist="result.artist"
                   :release="result.release"
                   :img="result.img"/>
-      <paginate
+      <Pagination
+          :value="this.$store.getters.getPage"
           :page-count="getPageCount"
           :page-range="10"
           :click-handler="clickCallback"
@@ -23,7 +24,7 @@
           :next-class="'text-xs font-semibold flex w-12 h-12 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-gray-500'"
           :active-class="'bg-gray-500'"
           >
-      </paginate>
+      </Pagination>
     </div>
 
     <div v-show="Object.keys(results).length == 0 && !firstView" class="text-white">
