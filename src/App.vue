@@ -19,4 +19,7 @@ export default {
 .app-height {
   height: 1900px;
 }
+a {
+  outline: none;
+}
 </style>
