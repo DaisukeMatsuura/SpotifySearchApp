@@ -1,17 +1,14 @@
 <template>
   <div class="bg-black app-height">
-    <Home/>
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
-
 export default {
   name: 'App',
-  components: {
-    Home
-  }
 }
 </script>
 
@@ -21,5 +18,11 @@ export default {
 }
 a {
   outline: none;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
