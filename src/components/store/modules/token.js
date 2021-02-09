@@ -3,8 +3,10 @@ const state = {
 };
 
 const getters = {
-  getLaravelApiToken: state => {
-    return state.laravelApiToken;
+  getLaravelApiToken: () => {
+    return {
+      laravelApiToken: localStorage.getItem('laravel_api_token')
+    }
   }
 };
 
@@ -17,6 +19,7 @@ const actions = {
 const mutations = {
   setApiToken(state, laravelApiToken) {
     state.laravelApiToken = laravelApiToken;
+    localStorage.setItem('laravel_api_token', laravelApiToken)
   }
 };
 
