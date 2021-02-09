@@ -10,17 +10,21 @@ https://quizzical-dubinsky-53f36f.netlify.app/
 ・Tailwindcss v2.0.1-compat
 ・axios v0.21.1
 ・vuex v3.6.0
+・vue-router v3.5.1
 ・vuejs-paginate v2.1.0
 ```
 
 ## Setting
-ソースコードをCLONEした場合は、`./setting/setting.js` に以下のように `CLIENT_ID` と `CLIENT_SECRET` を設置する必要があります。
+ソースコードをCLONEした場合は、`./setting/setting.js` に以下のように `CLIENT_ID` と `CLIENT_SECRET`、`API_USER`、`API_PASSWORD` を設置する必要があります。
 
 ```
 const CLIENT_ID = 'ご自身で取得したクライアントID'
 const CLIENT_SECRET = 'ご自身で取得したクライアントSECRET'
 
-export default { CLIENT_ID, CLIENT_SECRET }
+const API_USER = 'daisuke'
+const API_PASSWORD = '1234'
+
+export default { CLIENT_ID, CLIENT_SECRET, API_USER, API_PASSWORD }
 ```
 
 ## Project setup
