@@ -13,11 +13,19 @@ export default {
 </script>
 
 <style>
-.app-height {
-  height: 1900px;
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
 }
 a {
   outline: none;
+}
+.app-height {
+  height: 100%;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity .1s;
