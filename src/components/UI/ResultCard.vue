@@ -3,8 +3,8 @@
     <div class="flex-none w-72 mr-10">
       <div class="relative group cursor-pointer" @click="createFavorite($props)">
         <img class="relative mx-auto w-60 rounded-lg group-hover:opacity-25 z-20" :src="$props.img" alt="album_image">
-        <div v-show="!isFavorite" class="absolute top-24 left-32 text-6xl text-pink-600 z-10">&#9829;</div>
-        <div v-show="isFavorite" class="w-32 h-12 absolute top-24 left-20 rounded-full bg-pink-800 text-pink-200 flex items-center font-semibold text-xl justify-center z-30">isFavorite</div>
+        <div v-show="!$props.isFavorite" class="absolute top-24 left-32 text-6xl text-pink-600 z-10">&#9829;</div>
+        <div v-show="$props.isFavorite" class="w-32 h-12 absolute top-24 left-20 rounded-full bg-pink-800 text-pink-200 flex items-center font-semibold text-xl justify-center z-30">isFavorite</div>
       </div>
     </div>
     <div class="w-full pt-1 flex-grow ">
@@ -35,25 +35,32 @@ export default {
 
   data () {
     return {
-      isFavorite: false,
       favoriteId: '',
     }
   },
 
-  props: [ 'album', 'track', 'artist', 'img', 'release' ],
+  props: [
+    'album',
+    'track',
+    'artist',
+    'img',
+    'release',
+    'isFavorite',
+    'spotify_id',
+    'favorite_id'
+  ],
 
   methods: {
     createFavorite: function ($props) {
-      const laravelAccessToken = this.$store.getters.getLaravelApiToken
-      if (this.isFavorite) {
-        axios.delete(`http://localhost:8000/api/favorites/${this.favoriteId}`,
+      const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
+      if ($props.isFavorite) {
+        axios.delete(`https://spotify.brightful.biz/public/api/favorites/${$props.favorite_id}`,
             {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
-        .then(response => {
-          this.isFavorite = !this.isFavorite
-          console.log(response)
+        .then(() => {
+          this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })
         })
       } else {
-        axios.post('http://localhost:8000/api/favorites',
+        axios.post('https://spotify.brightful.biz/public/api/favorites',
             {
               'track': $props.track,
               'album': $props.album,
@@ -63,9 +70,8 @@ export default {
             },
             {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
             .then(response => {
-              console.log(response.data.data.favorite_id)
-              this.isFavorite = !this.isFavorite
               this.favoriteId = response.data.data.favorite_id
+              this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })
             })
             .catch(error => {
               alert(error.response.data.errors.detail + '\nこの楽曲は既に登録されています！')

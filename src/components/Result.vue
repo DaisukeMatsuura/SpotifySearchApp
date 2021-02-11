@@ -1,16 +1,15 @@
 <template>
-  <div class="flex justify-center bg-black">
-    <div v-show="Object.keys(results).length == 0 && firstView" class="text-white">
-      <div>Search for Your Favorite Music.</div>
-    </div>
-
-    <div v-show="Object.keys(results).length > 0" class="mt-4 text-white">
+  <div class="flex justify-center bg-black w-screen">
+    <div v-show="this.$store.getters.getSearchedMusic.length > 0" class="mt-4 text-white mb-20">
       <ResultCard v-for="(result, index) in getResult" :key="index"
                   :album="result.album"
                   :track="result.track"
                   :artist="result.artist"
                   :release="result.release"
-                  :img="result.img"/>
+                  :img="result.img"
+                  :isFavorite="result.isFavorite"
+                  :favorite_id="result.favorite_id"
+                  :spotify_id="result.spotify_id" />
       <Pagination
           :value="this.$store.getters.getPage"
           :page-count="getPageCount"
@@ -27,8 +26,9 @@
       </Pagination>
     </div>
 
-    <div v-show="Object.keys(results).length == 0 && !firstView" class="text-white">
-      <div>楽曲がみつかりませんでした.. <br /> 別のキーワードをお試し下さい</div>
+    <div v-show="this.$store.getters.getSearchedMusic.length === 0 && !$props.firstView"
+         class="text-white tracking-widest leading-loose">
+      <div class="p-2">楽曲がみつかりませんでした... <br /> 別のキーワードをお試し下さい</div>
     </div>
 
   </div>
@@ -40,16 +40,19 @@ import ResultCard from '../components/UI/ResultCard'
 
 export default {
   name: "Result",
+
   components: {
     ResultCard,
   },
-  props: [ 'results', 'firstView' ],
+
+  props: ['firstView'],
 
   data: function () {
     return {
       perPage: 5,
     }
   },
+
   methods: {
     clickCallback: function (pageNum) {
       this.$store.dispatch('setCurrentPage', pageNum)
@@ -59,14 +62,15 @@ export default {
       })
     }
   },
+
   computed: {
     getResult: function() {
       let start = (this.$store.getters.getPage - 1) * this.perPage
       let end = this.$store.getters.getPage * this.perPage
-      return  this.results.slice(start, end)
+      return  this.$store.getters.getSearchedMusic.slice(start, end)
     },
     getPageCount: function() {
-      return Math.ceil(this.results.length / this.perPage)
+      return Math.ceil(this.$store.getters.getSearchedMusic.length / this.perPage)
     }
   },
 }

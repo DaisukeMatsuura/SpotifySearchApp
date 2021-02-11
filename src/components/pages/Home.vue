@@ -1,28 +1,29 @@
 <template>
-<div class="container mx-auto h-full bg-black">
+<div class="mx-auto bg-black">
   <div class="flex">
     <router-link to="/">
-      <div class="w-1/2 md:w-1/4 p-10">
+      <div class="w-60 md:w-80 md:ml-10 p-10">
         <img alt="Vue logo" src="../../assets/logo.png">
       </div>
     </router-link>
     <router-link to="/favorite">
-      <div class="w-44 h-20 hover:bg-green-500 hover:text-white absolute right-24 top-10 rounded-full bg-white flex items-center font-semibold text-xl justify-center uppercase">
+      <div class="w-44 h-14 md:h-16 hover:bg-green-500 hover:text-white absolute right-16 top-8 md:top-12 rounded-full bg-white flex items-center font-semibold text-xl justify-center uppercase">
         Favorite List
       </div>
     </router-link>
   </div>
-  <h1 class="text-center text-white font-bold tracking-widest md:text-2xl">Spotify Music Search Application</h1>
+  <h1 class="md:mt-10 text-center text-white font-bold tracking-widest md:text-2xl">Spotify Music Search Application</h1>
   <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-8 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
     <InputField @update:field="searchWord = $event" :data="searchWord" />
     <div @click="getMusicInfo()"><Button label="Search" /></div>
   </div>
 
+  <div v-show="firstView" class="text-white text-center tracking-widest">Search for Your Favorite Music.</div>
   <div v-show="isLoading">
     <Spinner />
   </div>
   <div v-show="!isLoading">
-    <Result :results="results" :firstView="firstView" />
+    <Result :firstView="firstView" />
   </div>
 
 </div>
@@ -53,7 +54,6 @@ export default {
       firstView: true,
       accessToken: '',
       searchWord: '',
-      results: [],
       isLoading: false,
     }
   },
@@ -67,7 +67,7 @@ export default {
   methods: {
     getLaravelApiToken: function () {
       // エンドポイントを本番環境のものに変更する
-      axios.post('http://localhost:8000/api/login', {
+      axios.post('https://spotify.brightful.biz/public/api/login', {
         'username': setting.API_USER,
         'password': setting.API_PASSWORD,
         'password_confirmation': setting.API_PASSWORD
@@ -109,16 +109,19 @@ export default {
           const responseData = []
           Object.keys(response.data.tracks.items)
             .map(key => {
-                responseData.push({
+              responseData.push({
+                'favorite_id': '',
+                'spotify_id': response.data.tracks.items[key].id,
                 'track': response.data.tracks.items[key].name,
                 'album': response.data.tracks.items[key].album.name,
                 'artist': response.data.tracks.items[key].artists.map(e => e.name).join(', '),
                 'release': response.data.tracks.items[key].album.release_date,
                 'img': response.data.tracks.items[key].album.images[0].url,
+                'isFavorite': false
               })
             })
+          this.$store.dispatch('setSearchedMusic', responseData)
           this.$store.dispatch('setCurrentPage', 1)
-          this.results = responseData
           this.searchWord = ''
           this.firstView = false
           this.isLoading = false
