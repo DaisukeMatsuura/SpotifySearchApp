@@ -1,8 +1,16 @@
 # Spotify Music Search
 
+## アプリ概要
+SpotifyAPIを利用した楽曲の検索ができるアプリです。  
+また、楽曲のサムネイルをクリックするとお気に入りの曲として Favorite ページにストックすることができます。  
+Favorite の保存に関しては PHP のマイクロフレームワークである Lumen を用いて作成し、別ドメインで管理しています。  
+[バックエンドリポジトリ](https://github.com/DaisukeMatsuura/Spotify-App-Backend)
+
+一度 デモページでお試しください！
+
 ## デモページ
 
-https://quizzical-dubinsky-53f36f.netlify.app/
+https://frosty-mahavira-8d3cee.netlify.app/
 
 ## 技術要件
 ```
