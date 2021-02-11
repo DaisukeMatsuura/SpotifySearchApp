@@ -25,9 +25,6 @@ const mutations = {
     const temp = [];
     Object.keys(state.searchedMusic)
       .map(key => {
-        console.log(state.searchedMusic[key].spotify_id === favorite.spotify_id
-          ? !state.searchedMusic[key].isFavorite
-          : state.searchedMusic[key].isFavorite)
         temp.push({
           'favorite_id': favorite_id,
           'spotify_id': state.searchedMusic[key].spotify_id,
@@ -41,7 +38,6 @@ const mutations = {
             : state.searchedMusic[key].isFavorite
         })
       })
-    console.log(temp)
     state.searchedMusic = temp;
   }
 };
