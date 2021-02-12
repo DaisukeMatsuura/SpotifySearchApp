@@ -2,7 +2,7 @@
   <div class="w-96 flex-col m-6 text-white border-4 border-light-blue-500 rounded-lg">
     <div class="relative group cursor-pointer" @click="createFavorite($props)">
       <img class="relative mx-auto w-48 rounded-lg group-hover:opacity-25 z-20 mt-6" :src="$props.img" alt="album_image">
-      <div v-show="!this.isFavorite" class="absolute top-16 left-44 text-6xl text-pink-600 z-10">&#9829;</div>
+      <div v-show="!this.isFavorite" class="absolute top-16 left-44 text-6xl text-pink-600 z-10"><font-awesome-icon icon="kiss-wink-heart" /></div>
       <div v-show="this.isFavorite" class="w-32 h-12 absolute top-20 left-32 rounded-full bg-pink-800 text-pink-200 flex items-center font-semibold text-xl justify-center z-30">isFavorite</div>
     </div>
     <div class="pt-2">
