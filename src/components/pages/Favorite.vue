@@ -8,7 +8,11 @@
 
     <h1 class="uppercase text-center text-white text-5xl font-bold tracking-wide font-mono mb-12">Favorite List</h1>
 
-    <div class="flex flex-wrap justify-around mx-10">
+    <div v-show="Object.keys(favorites).length === 0 && dataExists" class="text-white text-center text-xl tracking-widest">
+      No Favorite... <br>
+      Please return to the top page and register as a favorite.
+    </div>
+    <div v-show="Object.keys(favorites).length > 0" class="flex flex-wrap justify-around mx-10">
       <FavoriteCard v-for="(favorite, index) in favorites" :key="index" class="text-white"
                     :album="favorite.data.attributes.album"
                     :track="favorite.data.attributes.track"
@@ -35,6 +39,7 @@ export default {
   data () {
     return {
       favorites: [],
+      dataExists: false
     }
   },
   
@@ -49,6 +54,7 @@ export default {
           { headers: { 'Authorization': 'Bearer ' + laravelAccessToken } })
           .then(response => {
             this.favorites = response.data.data
+            this.dataExists = true
           })
     }
   }
