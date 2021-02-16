@@ -1,12 +1,8 @@
 <template>
   <div class="bg-black">
-    <router-link to="/">
-      <div class="w-1/2 md:w-80 p-10">
-        <img alt="Vue logo" src="../../assets/logo.png">
-      </div>
-    </router-link>
+    <Header />
 
-    <h1 class="uppercase text-center text-white text-5xl font-bold tracking-wide font-mono mb-12">Favorite List</h1>
+    <h1 class="uppercase text-center text-white text-5xl font-bold tracking-wide font-mono mb-12">Public Favorite List</h1>
 
     <div v-show="Object.keys(favorites).length === 0 && dataExists" class="text-white text-center text-xl tracking-widest">
       No Favorite... <br>
@@ -27,12 +23,14 @@
 
 <script>
 import axios from "axios"
-import FavoriteCard from '../UI/ResultCardFavorite'
+import Header from "../organisms/Header";
+import FavoriteCard from '../molecules/ResultCardFavorite'
 
 export default {
   name: "Favorite",
 
   components: {
+    Header,
     FavoriteCard,
   },
 
@@ -50,7 +48,7 @@ export default {
   methods: {
     getAllFavorites: function () {
       const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
-      axios.get('https://spotify.brightful.biz/public/api/favorites',
+      axios.get('https://spotify.brightful.biz/public/api/general/favorites',
           { headers: { 'Authorization': 'Bearer ' + laravelAccessToken } })
           .then(response => {
             this.favorites = response.data.data

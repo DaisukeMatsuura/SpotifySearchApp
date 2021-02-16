@@ -1,17 +1,6 @@
 <template>
 <div class="mx-auto bg-black">
-  <div class="flex">
-    <router-link to="/">
-      <div class="w-60 md:w-80 md:ml-10 p-10">
-        <img alt="Vue logo" src="../../assets/logo.png">
-      </div>
-    </router-link>
-    <router-link to="/favorite">
-      <div class="w-44 h-14 md:h-16 hover:bg-green-500 hover:text-white absolute right-16 top-8 md:top-12 rounded-full bg-white flex items-center font-semibold text-xl justify-center uppercase">
-        Favorite List
-      </div>
-    </router-link>
-  </div>
+  <Header />
   <h1 class="md:mt-10 text-center text-white font-bold tracking-widest md:text-2xl">Spotify Music Search Application</h1>
   <div class='flex justify-between min-w-xs max-w-xl w-full p-2 my-8 bg-white shadow-sm rounded-full overflow-hidden mx-auto'>
     <InputField @update:field="searchWord = $event" :data="searchWord" />
@@ -30,14 +19,15 @@
 </template>
 
 <script>
-import setting from '../../../setting/setting'
+import SETTING from '../../../setting/setting'
 import axios from 'axios'
 
-import InputField from '../UI/InputField'
-import Button from '../UI/Button'
-import Spinner from '../UI/Spinner'
+import Header from '../organisms/Header'
+import Result from '../organisms/Result'
 
-import Result from '../Result'
+import InputField from '../atoms/InputField'
+import Button from '../atoms/Button'
+import Spinner from '../atoms/Spinner'
 
 export default {
   name: "Home",
@@ -46,7 +36,8 @@ export default {
     Result,
     InputField,
     Button,
-    Spinner
+    Spinner,
+    Header,
   },
 
   data () {
@@ -66,11 +57,10 @@ export default {
 
   methods: {
     getLaravelApiToken: function () {
-      // エンドポイントを本番環境のものに変更する
       axios.post('https://spotify.brightful.biz/public/api/login', {
-        'username': setting.API_USER,
-        'password': setting.API_PASSWORD,
-        'password_confirmation': setting.API_PASSWORD
+        'username': SETTING.API_USER,
+        'password': SETTING.API_PASSWORD,
+        'password_confirmation': SETTING.API_PASSWORD
       })
       .then(response => {
         this.$store.dispatch('setLaravelApiToken', response.data.access_token)
@@ -81,7 +71,7 @@ export default {
       var params = new URLSearchParams()
       params.append('grant_type', 'client_credentials')
 
-      const AUTH = 'Basic ' + btoa(`${setting.CLIENT_ID}:${setting.CLIENT_SECRET}`)
+      const AUTH = 'Basic ' + btoa(`${SETTING.CLIENT_ID}:${SETTING.CLIENT_SECRET}`)
 
       axios.post('https://accounts.spotify.com/api/token', params, {
         headers: {

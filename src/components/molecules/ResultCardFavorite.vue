@@ -50,13 +50,13 @@ export default {
     createFavorite: function ($props) {
       const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
       if (this.isFavorite) {
-        axios.delete(`https://spotify.brightful.biz/public/api/favorites/${$props.favoriteId}`,
+        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`,
             {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
             .then(() => {
               this.isFavorite = !this.isFavorite
             })
       } else {
-        axios.post('https://spotify.brightful.biz/public/api/favorites',
+        axios.post('https://spotify.brightful.biz/public/api/general/favorites',
             {
               'track': $props.track,
               'album': $props.album,

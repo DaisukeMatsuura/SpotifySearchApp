@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import ResultCard from '../components/UI/ResultCard'
+import ResultCard from '../molecules/ResultCard'
 
 export default {
   name: "Result",
