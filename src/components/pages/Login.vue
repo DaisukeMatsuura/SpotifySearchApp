@@ -1,13 +1,13 @@
 <template>
   <div>
     <Header />
-    <div class="text-white text-center">Login Page</div>
+    <LoginCard />
   </div>
-
 </template>
 
 <script>
 import Header from '../organisms/Header'
+import LoginCard from '../molecules/LoginCard'
 
 
 export default {
@@ -15,6 +15,7 @@ export default {
 
   components: {
     Header,
+    LoginCard,
   }
 }
 </script>

@@ -1,19 +1,20 @@
 <template>
-<div>
-  <Header />
-  <div class="text-white text-center">Register Page</div>
-</div>
+  <div>
+    <Header />
+    <RegisterCard />
+  </div>
 </template>
 
 <script>
 import Header from '../organisms/Header'
-
+import RegisterCard from '../molecules/RegistrationCard';
 
 export default {
-  name: "Authentication",
+  name: "Registration",
 
   components: {
     Header,
+    RegisterCard,
   },
 }
 </script>
