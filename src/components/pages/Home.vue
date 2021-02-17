@@ -51,7 +51,7 @@ export default {
 
   mounted () {
     this.getAccessToken()
-    this.getLaravelApiToken()
+    //this.getLaravelApiToken()
     this.$store.dispatch('setCurrentPage', 1)
   },
 

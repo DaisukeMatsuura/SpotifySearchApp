@@ -44,6 +44,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      loginUser: '',
       form: {
         name: '',
         password: '',
@@ -67,7 +68,12 @@ export default {
           'password': this.form.password,
         })
         .then(response => {
-          console.log(response)
+          this.$store.dispatch('setLoginUser', {
+            'username': response.data.auth.username,
+            'accessToken': response.data.access_token
+          })
+          this.isLoading = false
+          this.$router.go({ path: this.$router.push('/user/my-page'), force: true })
         })
         .catch(() => {
           this.isLoading = false
@@ -82,10 +88,10 @@ export default {
         this.message.name = '名前は5文字以上20文字以内で入力してください'
         this.message.errorCount++
       }
-      if (this.form.password.length < 5 || this.form.password.length > 20) {
-        this.message.password = 'パスワードは5文字以上20文字以内で入力してください'
-        this.message.errorCount++
-      }
+      // if (this.form.password.length < 5 || this.form.password.length > 20) {
+      //   this.message.password = 'パスワードは5文字以上20文字以内で入力してください'
+      //   this.message.errorCount++
+      // }
     },
     resetErrorMessage: function () {
       this.message.name = ''

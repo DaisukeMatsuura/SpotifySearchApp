@@ -77,7 +77,12 @@ export default {
           'password_confirmation': this.form.passwordConfirm
         })
         .then(response => {
-          console.log(response)
+          this.$store.dispatch('setLoginUser', {
+            'username': response.data.auth.username,
+            'accessToken': response.data.access_token
+          })
+          this.isLoading = false
+          this.$router.go({ path: this.$router.push('/mypage'), force: true })
         })
         .catch(errors => {
           this.isLoading = false

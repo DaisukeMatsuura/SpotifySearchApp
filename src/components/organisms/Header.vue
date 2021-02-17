@@ -16,7 +16,7 @@
           Login
         </div>
       </router-link>
-      <router-link to="/my-page" v-show="isValidated">
+      <router-link to="user/my-page" v-show="isValidated">
         <div class="mr-4 w-44 h-14 md:h-16 hover:bg-green-500 hover:text-white rounded-full bg-white flex items-center font-semibold text-xl justify-center uppercase tracking-widest">
           MyPage
         </div>
@@ -38,9 +38,33 @@ export default {
 
   data () {
     return {
+      loginUser: {
+        'username': '',
+        'accessToken': ''
+      },
       isValidated: false,
     }
   },
+
+  mounted() {
+    console.log('mounted')
+    this.getLoginUser()
+  },
+  methods: {
+    getLoginUser: function () {
+      this.loginUser = this.$store.getters.getLoginUser
+      if (this.loginUser.accessToken && this.loginUser.username) {
+        this.isValidated = true
+      }
+    }
+  },
+
+  watch: {
+    loginUser: function () {
+      this.getLoginUser()
+      console.log('watch')
+    },
+  }
 
 }
 </script>
