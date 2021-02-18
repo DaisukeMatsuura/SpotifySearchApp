@@ -48,26 +48,18 @@ export default {
 
   methods: {
     createFavorite: function ($props) {
-      const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
       if (this.isFavorite) {
-        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`,
-            {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
-            .then(() => {
-              this.isFavorite = !this.isFavorite
-            })
+        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`)
+          .then(() => { this.isFavorite = !this.isFavorite })
       } else {
-        axios.post('https://spotify.brightful.biz/public/api/general/favorites',
-            {
-              'track': $props.track,
-              'album': $props.album,
-              'artist': $props.artist,
-              'release_date': $props.release,
-              'image_path': $props.img
-            },
-            { headers: { 'Authorization': 'Bearer ' + laravelAccessToken } })
-            .then(() => {
-              this.isFavorite = !this.isFavorite
-            })
+        axios.post('https://spotify.brightful.biz/public/api/general/favorites', {
+            'track': $props.track,
+            'album': $props.album,
+            'artist': $props.artist,
+            'release_date': $props.release,
+            'image_path': $props.img
+          })
+          .then(() => { this.isFavorite = !this.isFavorite })
       }
     },
   }

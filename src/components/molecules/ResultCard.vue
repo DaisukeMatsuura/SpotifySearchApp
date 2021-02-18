@@ -52,10 +52,8 @@ export default {
 
   methods: {
     createFavorite: function ($props) {
-      const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
       if ($props.isFavorite) {
-        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favorite_id}`,
-            {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
+        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favorite_id}`)
         .then(() => {
           this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })
         })
@@ -67,8 +65,7 @@ export default {
               'artist': $props.artist,
               'release_date': $props.release,
               'image_path': $props.img
-            },
-            {headers: {'Authorization': 'Bearer ' + laravelAccessToken}})
+            })
             .then(response => {
               this.favoriteId = response.data.data.favorite_id
               this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })

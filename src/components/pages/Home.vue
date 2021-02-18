@@ -51,21 +51,10 @@ export default {
 
   mounted () {
     this.getAccessToken()
-    //this.getLaravelApiToken()
     this.$store.dispatch('setCurrentPage', 1)
   },
 
   methods: {
-    getLaravelApiToken: function () {
-      axios.post('https://spotify.brightful.biz/public/api/login', {
-        'username': SETTING.API_USER,
-        'password': SETTING.API_PASSWORD,
-        'password_confirmation': SETTING.API_PASSWORD
-      })
-      .then(response => {
-        this.$store.dispatch('setLaravelApiToken', response.data.access_token)
-      })
-    },
     getAccessToken: function () {
       const self = this
       var params = new URLSearchParams()
