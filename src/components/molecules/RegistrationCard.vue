@@ -82,14 +82,13 @@ export default {
             'accessToken': response.data.access_token
           })
           this.isLoading = false
-          this.$router.go({ path: this.$router.push('/mypage'), force: true })
+          this.$router.go({ path: this.$router.push('/'), force: true })
         })
-        .catch(errors => {
+        .catch(() => {
           this.isLoading = false
           this.message.name = 'この名前はすでに使われています'
           this.form.password = ''
           this.form.passwordConfirm = ''
-          console.log(errors.response.data.username[0])
         })
       }
     },
@@ -103,16 +102,10 @@ export default {
         this.message.password = 'パスワードは5文字以上20文字以内で入力してください'
         this.message.errorCount++
       }
-      if (this.form.password !== this.form.passwordConfirm) {
-        this.message.passwordConfirm = 'パスワードと一致しません'
-        this.form.passwordConfirm = ''
-        this.message.errorCount++
-      }
     },
     resetErrorMessage: function () {
       this.message.name = ''
       this.message.password = ''
-      this.message.passwordConfirm = ''
       this.message.errorCount = 0
     },
   }
