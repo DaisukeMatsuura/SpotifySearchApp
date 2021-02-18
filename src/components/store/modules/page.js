@@ -1,5 +1,5 @@
 const state = {
-  currentPage: '',
+  currentPage: 1,
 };
 
 const getters = {

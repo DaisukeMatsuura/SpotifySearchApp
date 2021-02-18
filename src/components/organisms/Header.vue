@@ -16,8 +16,11 @@
           Login
         </div>
       </router-link>
-      <router-link to="user/my-page" v-show="isValidated">
-        <div class="mr-4 w-44 h-14 md:h-16 hover:bg-green-500 hover:text-white rounded-full bg-white flex items-center font-semibold text-xl justify-center uppercase tracking-widest">
+        <div @click="logout()" v-show="isValidated" class="mr-4 w-24 h-14 md:h-16 hover:bg-green-600 hover:text-white text-green-600 rounded-full flex items-center font-semibold text-xl justify-center">
+          Logout
+        </div>
+      <router-link to="/user/my-page" v-show="isValidated">
+        <div class="mr-4 w-44 h-14 md:h-16 hover:bg-white rounded-full bg-green-700 flex items-center font-semibold text-xl justify-center uppercase tracking-widest">
           MyPage
         </div>
       </router-link>
@@ -47,7 +50,6 @@ export default {
   },
 
   mounted() {
-    console.log('mounted')
     this.getLoginUser()
   },
   methods: {
@@ -56,13 +58,16 @@ export default {
       if (this.loginUser.accessToken && this.loginUser.username) {
         this.isValidated = true
       }
+    },
+    logout: function () {
+      this.$store.dispatch('logout')
+      this.$router.go({ path: this.$router.push('/'), force: true })
     }
   },
 
   watch: {
     loginUser: function () {
       this.getLoginUser()
-      console.log('watch')
     },
   }
 

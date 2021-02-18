@@ -47,9 +47,7 @@ export default {
   
   methods: {
     getAllFavorites: function () {
-      const laravelAccessToken = this.$store.getters.getLaravelApiToken.laravelApiToken
-      axios.get('https://spotify.brightful.biz/public/api/general/favorites',
-          { headers: { 'Authorization': 'Bearer ' + laravelAccessToken } })
+      axios.get('https://spotify.brightful.biz/public/api/general/favorites')
           .then(response => {
             this.favorites = response.data.data
             this.dataExists = true
