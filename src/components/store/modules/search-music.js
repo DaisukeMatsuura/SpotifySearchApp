@@ -12,8 +12,8 @@ const actions = {
   setSearchedMusic({commit}, searchedMusic) {
     commit('setMusic', searchedMusic);
   },
-  isFavorite({commit}, {favorite, favorite_id}) {
-    commit('isFavorite', {favorite, favorite_id});
+  isFavorite({commit}, {favorite, favoriteId}) {
+    commit('isFavorite', {favorite, favoriteId});
   },
 };
 
@@ -21,19 +21,19 @@ const mutations = {
   setMusic(state, searchedMusic) {
     state.searchedMusic = searchedMusic;
   },
-  isFavorite(state, {favorite, favorite_id}) {
+  isFavorite(state, {favorite, favoriteId}) {
     const temp = [];
     Object.keys(state.searchedMusic)
       .map(key => {
         temp.push({
-          'favorite_id': favorite_id,
-          'spotify_id': state.searchedMusic[key].spotify_id,
+          'favoriteId': favoriteId,
+          'spotifyId': state.searchedMusic[key].spotifyId,
           'track': state.searchedMusic[key].track,
           'album': state.searchedMusic[key].album,
           'artist': state.searchedMusic[key].artist,
           'release': state.searchedMusic[key].release,
           'img': state.searchedMusic[key].img,
-          'isFavorite': state.searchedMusic[key].spotify_id === favorite.spotify_id
+          'isFavorite': state.searchedMusic[key].spotifyId === favorite.spotifyId
             ? !state.searchedMusic[key].isFavorite
             : state.searchedMusic[key].isFavorite
         })

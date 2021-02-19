@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-black">
     <Header />
     <h1 v-show="isValidated" class="uppercase text-center text-white text-5xl font-bold tracking-wide font-mono mb-12">{{loginUser.username}}'s Favorite List</h1>
     <div v-show="Object.keys(favorites).length === 0 && dataExists" class="text-white text-center text-xl tracking-widest">

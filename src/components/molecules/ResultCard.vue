@@ -35,7 +35,7 @@ export default {
 
   data () {
     return {
-      favoriteId: '',
+      loginUser: '',
     }
   },
 
@@ -46,33 +46,66 @@ export default {
     'img',
     'release',
     'isFavorite',
-    'spotify_id',
-    'favorite_id'
+    'spotifyId',
+    'favoriteId',
   ],
+
+  mounted() {
+    this.loginUser = this.$store.getters.getLoginUser
+  },
 
   methods: {
     createFavorite: function ($props) {
-      if ($props.isFavorite) {
-        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favorite_id}`)
-        .then(() => {
-          this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })
-        })
+      if (this.loginUser.username && this.loginUser.accessToken && this.loginUser.userId) {
+        // ログインユーザーのFavorite
+        if ($props.isFavorite) {
+          axios.delete(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites/${$props.favoriteId}`,
+              { headers: { 'Authorization': 'Bearer ' + this.loginUser.accessToken } })
+          .then(() => {
+            this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+          })
+        } else {
+          axios.post(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites`,
+          {
+            'track': $props.track,
+            'album': $props.album,
+            'artist': $props.artist,
+            'release_date': $props.release,
+            'image_path': $props.img,
+            'user_id': this.loginUser.userId,
+          },{ headers: { 'Authorization': 'Bearer ' + this.loginUser.accessToken } })
+          .then(response => {
+            this.favoriteId = response.data.data.favorite_id
+            this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+          })
+          .catch(error => {
+            alert(error.response.data.errors.detail + '\nこの楽曲は既に登録されています！')
+          })
+        }
       } else {
-        axios.post('https://spotify.brightful.biz/public/api/general/favorites',
-            {
-              'track': $props.track,
-              'album': $props.album,
-              'artist': $props.artist,
-              'release_date': $props.release,
-              'image_path': $props.img
-            })
-            .then(response => {
-              this.favoriteId = response.data.data.favorite_id
-              this.$store.dispatch('isFavorite', { 'favorite':$props, 'favorite_id' :this.favoriteId })
-            })
-            .catch(error => {
-              alert(error.response.data.errors.detail + '\nこの楽曲は既に登録されています！')
-            })
+        // 非ログインユーザーのFavorite
+        if ($props.isFavorite) {
+          axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`)
+          .then(() => {
+            this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+          })
+        } else {
+          axios.post('https://spotify.brightful.biz/public/api/general/favorites',
+          {
+            'track': $props.track,
+            'album': $props.album,
+            'artist': $props.artist,
+            'release_date': $props.release,
+            'image_path': $props.img
+          })
+          .then(response => {
+            this.favoriteId = response.data.data.favorite_id
+            this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+          })
+          .catch(error => {
+            alert(error.response.data.errors.detail + '\nこの楽曲は既に登録されています！')
+          })
+        }
       }
     },
   }

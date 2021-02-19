@@ -8,8 +8,8 @@
                   :release="result.release"
                   :img="result.img"
                   :isFavorite="result.isFavorite"
-                  :favorite_id="result.favorite_id"
-                  :spotify_id="result.spotify_id" />
+                  :spotifyId="result.spotifyId"
+                  :favoriteId="result.favoriteId" />
       <Pagination
           :value="this.$store.getters.getPage"
           :page-count="getPageCount"

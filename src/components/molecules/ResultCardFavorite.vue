@@ -42,24 +42,60 @@ export default {
 
   data: function () {
     return {
+      loginUser: '',
       isFavorite: true,
     }
   },
 
+  mounted() {
+    this.loginUser = this.$store.getters.getLoginUser
+  },
+
   methods: {
     createFavorite: function ($props) {
-      if (this.isFavorite) {
-        axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`)
-          .then(() => { this.isFavorite = !this.isFavorite })
+      // ログインユーザーのFavorite
+      if (this.loginUser.username && this.loginUser.accessToken && this.loginUser.userId) {
+        if (this.isFavorite) {
+          axios.delete(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites/${$props.favoriteId}`,
+              { headers: { 'Authorization': 'Bearer ' + this.loginUser.accessToken } })
+          .then(() => {
+            this.isFavorite = !this.isFavorite
+          })
+        } else {
+          axios.post(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites`,
+              {
+                'track': $props.track,
+                'album': $props.album,
+                'artist': $props.artist,
+                'release_date': $props.release,
+                'image_path': $props.img,
+                'user_id': this.loginUser.userId,
+              },{ headers: { 'Authorization': 'Bearer ' + this.loginUser.accessToken } })
+          .then(() => {
+            this.isFavorite = !this.isFavorite
+          })
+        }
       } else {
-        axios.post('https://spotify.brightful.biz/public/api/general/favorites', {
+        // 非ログインユーザーのFavorite
+        if (this.isFavorite) {
+          axios.delete(`https://spotify.brightful.biz/public/api/general/favorites/${$props.favoriteId}`)
+              .then(() => {
+                this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+              })
+        } else {
+          axios.post('https://spotify.brightful.biz/public/api/general/favorites',
+          {
             'track': $props.track,
             'album': $props.album,
             'artist': $props.artist,
             'release_date': $props.release,
             'image_path': $props.img
           })
-          .then(() => { this.isFavorite = !this.isFavorite })
+          .then(response => {
+            this.favoriteId = response.data.data.favorite_id
+            this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
+          })
+        }
       }
     },
   }

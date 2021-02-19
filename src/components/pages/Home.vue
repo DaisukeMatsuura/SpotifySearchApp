@@ -89,8 +89,8 @@ export default {
           Object.keys(response.data.tracks.items)
             .map(key => {
               responseData.push({
-                'favorite_id': '',
-                'spotify_id': response.data.tracks.items[key].id,
+                'favoriteId': '',
+                'spotifyId': response.data.tracks.items[key].id,
                 'track': response.data.tracks.items[key].name,
                 'album': response.data.tracks.items[key].album.name,
                 'artist': response.data.tracks.items[key].artists.map(e => e.name).join(', '),

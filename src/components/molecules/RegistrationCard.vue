@@ -78,6 +78,7 @@ export default {
         })
         .then(response => {
           this.$store.dispatch('setLoginUser', {
+            'userId': response.data.auth.id,
             'username': response.data.auth.username,
             'accessToken': response.data.access_token
           })
