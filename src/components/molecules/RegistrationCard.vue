@@ -71,7 +71,7 @@ export default {
 
       if (!this.message.errorCount) {
         this.isLoading = true
-        axios.post('http://localhost:8000/api/register', {
+        axios.post('https://spotify.brightful.biz/public/api/register', {
           'username': this.form.name,
           'password': this.form.password,
           'password_confirmation': this.form.passwordConfirm

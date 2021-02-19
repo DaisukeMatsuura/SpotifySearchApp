@@ -15,7 +15,7 @@ export default new VueRouter({
   routes: [
     // ホーム
     { name: 'home', path: '/', component: Home },
-    // お気に入りリスト
+    // Publicのお気に入りリスト
     { name: 'favorite', path: '/favorite', component: Favorite },
 
     // 認証関連

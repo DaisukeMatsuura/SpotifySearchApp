@@ -59,13 +59,13 @@ export default {
       if (this.loginUser.username && this.loginUser.accessToken && this.loginUser.userId) {
         // ログインユーザーのFavorite
         if ($props.isFavorite) {
-          axios.delete(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites/${$props.favoriteId}`,
+          axios.delete(`https://spotify.brightful.biz/public/api/users/${this.loginUser.userId}/favorites/${$props.favoriteId}`,
               { headers: { 'Authorization': 'Bearer ' + this.loginUser.accessToken } })
           .then(() => {
             this.$store.dispatch('isFavorite', {'favorite': $props, 'favoriteId': this.favoriteId})
           })
         } else {
-          axios.post(`http://localhost:8000/api/users/${this.loginUser.userId}/favorites`,
+          axios.post(`https://spotify.brightful.biz/public/api/users/${this.loginUser.userId}/favorites`,
           {
             'track': $props.track,
             'album': $props.album,
