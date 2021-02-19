@@ -17,6 +17,7 @@ https://frosty-mahavira-8d3cee.netlify.app/
 
 ## 技術要件
 ```
+・Vue v2.6.12
 ・VueCLI v4.5.9
 ・Tailwindcss v2.0.1-compat
 ・axios v0.21.1
@@ -26,14 +27,11 @@ https://frosty-mahavira-8d3cee.netlify.app/
 ```
 
 ## Setting
-ソースコードをCLONEした場合は、`./setting/setting.js` に以下のように `CLIENT_ID` と `CLIENT_SECRET`、`API_USER`、`API_PASSWORD` を設置する必要があります。
+ソースコードをCLONEした場合は、`./setting/setting.js` に以下のように `CLIENT_ID` と `CLIENT_SECRET` を設置する必要があります。
 
 ```
 const CLIENT_ID = 'ご自身で取得したクライアントID'
 const CLIENT_SECRET = 'ご自身で取得したクライアントSECRET'
-
-const API_USER = 'daisuke'
-const API_PASSWORD = '1234'
 
 export default { CLIENT_ID, CLIENT_SECRET, API_USER, API_PASSWORD }
 ```
