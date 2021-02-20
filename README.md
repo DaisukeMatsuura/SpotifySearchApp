@@ -33,7 +33,7 @@ https://frosty-mahavira-8d3cee.netlify.app/
 const CLIENT_ID = 'ご自身で取得したクライアントID'
 const CLIENT_SECRET = 'ご自身で取得したクライアントSECRET'
 
-export default { CLIENT_ID, CLIENT_SECRET, API_USER, API_PASSWORD }
+export default { CLIENT_ID, CLIENT_SECRET }
 ```
 
 ## Project setup
