@@ -1,32 +1,32 @@
 <template>
-  <div class="mx-auto h-full flex justify-center items-center mt-20 mb-10">
+  <div class="mx-auto h-full flex justify-center items-center mt-8 mb-10">
     <div v-show="!isLoading" class="w-96 bg-green-500 rounded-lg shadow-xl p-6">
-      <div class="flex justify-center pt-8">
+      <div class="flex justify-center p-2">
         <img src="../../assets/spotify_logo.jpg" class="w-20 h-20 rounded-full">
       </div>
       <div class="pt-4">
-        <div class="relative pt-8 px-4">
+        <div class="relative pt-2 px-4">
           <label for="name" class="uppercase text-gray-900 text-xs font-bold absolute pl-3 pt-3">Name</label>
           <div>
             <input id="name" type="text" class="pt-10 w-full rounded p-4 bg-gray-200 text-black outline-none focus:bg-white" name="name" v-model="form.name" placeholder="yourname">
             <span v-show="message.name" class="text-red-700 text-xs p-1" role="alert"><strong>{{ message.name }}</strong></span>
           </div>
         </div>
-        <div class="relative pt-6 px-4">
+        <div class="relative pt-3 px-4">
           <label for="password" class="uppercase text-gray-900 text-xs font-bold absolute pl-3 pt-3">Password</label>
           <div class="col-md-6">
             <input id="password" type="password" class="pt-10 w-full rounded p-4 bg-gray-200 text-black outline-none focus:bg-white" name="password" v-model="form.password" placeholder="Password">
             <span v-show="message.password" class="text-red-700 text-xs p-1" role="alert"><strong>{{ message.password }}</strong></span>
           </div>
         </div>
-        <div class="relative pt-6 px-4">
+        <div class="relative pt-3 px-4">
           <label for="password-confirm" class="uppercase text-gray-900 text-xs font-bold absolute pl-3 pt-3">Password Confirm</label>
           <div class="col-md-6">
             <input id="password-confirm" type="password" class="pt-10 w-full rounded p-4 bg-gray-200 text-black outline-none focus:bg-white" name="password_confirmation" v-model="form.passwordConfirm" required autocomplete="new-password" placeholder="Password Confirm">
             <span v-show="message.passwordConfirm" class="text-red-700 text-sm p-1" role="alert"><strong>{{ message.passwordConfirm }}</strong></span>
           </div>
         </div>
-        <div class="pt-10 mb-8 px-4" @click="register()">
+        <div class="py-4 px-4" @click="register()">
           <div class="w-full py-4 px-3 text-center uppercase rounded text-white hover:text-green-900 font-bold tracking-widest hover:bg-white bg-green-900 cursor-pointer">
             Register
           </div>

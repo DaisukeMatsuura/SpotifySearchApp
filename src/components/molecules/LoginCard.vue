@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-auto h-full flex justify-center items-center mt-20 mb-10">
+  <div class="mx-auto h-full flex justify-center items-center mt-10 mb-10">
     <div v-show="!isLoading" class="w-96 bg-green-500 rounded-lg shadow-xl p-6">
-      <div class="flex justify-center pt-8">
+      <div class="flex justify-center pt-6">
         <img src="../../assets/spotify_logo.jpg" class="w-20 h-20 rounded-full">
       </div>
       <div class="pt-4">
@@ -12,14 +12,14 @@
             <span v-show="message.name" class="text-red-700 text-sm p-1" role="alert"><strong>{{ message.name }}</strong></span>
           </div>
         </div>
-        <div class="relative pt-10 px-4">
+        <div class="relative pt-8 px-4">
           <label for="password" class="uppercase text-gray-900 text-xs font-bold absolute pl-3 pt-3">Password</label>
           <div class="col-md-6">
             <input id="password" type="password" class="pt-10 w-full rounded p-4 bg-gray-200 text-black outline-none focus:bg-white" name="password" v-model="form.password" placeholder="Password">
             <span v-show="message.password" class="text-red-700 text-sm p-1" role="alert"><strong>{{ message.password }}</strong></span>
           </div>
         </div>
-        <div class="pt-10 mb-8 px-4" @click="register()">
+        <div class="pt-10 mb-6 px-4" @click="register()">
           <div class="w-full py-4 px-3 text-center uppercase rounded text-white hover:text-green-900 font-bold tracking-widest hover:bg-white bg-green-900 cursor-pointer">
             Login
           </div>
@@ -75,7 +75,7 @@ export default {
             'accessToken': response.data.access_token
           })
           this.isLoading = false
-          this.$router.go({ path: this.$router.push('/user/my-page'), force: true })
+          this.$router.go({ path: this.$router.push('/'), force: true })
         })
         .catch(() => {
           this.isLoading = false
